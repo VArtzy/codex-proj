@@ -1,0 +1,4 @@
+BK001|Buku A|Fiksi|75000.00
+BK003|Buku C|Teknologi|90000.00
+BK004|Buku D|Biografi|40000.00
+BK005|Buku B|Finansial|100000.00

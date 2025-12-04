@@ -26,7 +26,16 @@ import readAsmProgram from "./util.js";
 //     [0x04, 0] // print r0
 // ];
 
-// const program = new Uint8Array([
+// const program5 = [
+//     [0x01, 0, 5], // r0 => 5
+//     [0x04, 0], // print
+//     [0x03, 0, -1], // r0--
+//     [0x05, 0, 5], // if r0 == 0 goto end
+//     [0x06, 1], // jump to print
+//     [0x04, 0] // end
+// ];
+
+// const program6 = new Uint8Array([
 //     0x01, 0, 5, // r0 => 5
 //     0x04, 0, // print r0
 //     0x03, 0, -1, // r0--

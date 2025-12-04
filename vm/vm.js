@@ -1,3 +1,5 @@
+import readAsmProgram from "./util.js";
+
 // const program1 = [
 //     ["const", 0, 10], // r0 => 10
 //     ["const", 1, 20], // r1 => 20
@@ -5,14 +7,32 @@
 //     ["print", 0] // print r0
 // ]; // 01 0A 02 03
 
+// const program2 = [
+//     ["const", 0, 5], // r0 => 5
+//     ["print", 0], // print
+//     ["add", 0, -1], // r0--
+//     ["jumpIfZero", 0, 5], // if r0 == 0 goto end
+//     ["jump", 1], // jump to print
+//     ["print", 0] // end
+// ];
+
+// const program3 = readAsmProgram('inst.asm');
+
 const program = [
-    ["const", 0, 5], // r0 => 5
-    ["print", 0], // print
-    ["add", 0, -1], // r0--
-    ["jumpIfZero", 0, 5], // if r0 == 0 goto end
-    ["jump", 1], // jump to print
-    ["print", 0] // end
+    [0x01, 0, 10], // r0 => 10
+    [0x01, 1, 20], // r1 => 20
+    [0x03, 0, 1], // r0 = r0 + r1
+    [0x04, 0] // print r0
 ];
+
+
+const program5 = new Uint8Array([
+    0x01, 0, 10, // r0 => 10
+    0x01, 1, 20, // r1 => 20
+    0x03, 0, 1, // r0 = r0 + r1
+    0x04, 0 // print r0
+]);
+console.log(program5)
 
 const vm = {
     regs: [0, 0, 0, 0], // 4 registers
@@ -23,10 +43,10 @@ while(vm.pc < program.length) {
     const instr = program[vm.pc];
     const op = instr[0];
 
-    if (op === "const") {
+    if (op === 0x01) {
         const [_, reg, val] = instr;
         vm.regs[reg] = val;
-    } else if (op === "add") {
+    } else if (op === 0x03) {
         const [_, reg, regIndex] = instr;
         if (regIndex === -1) {
             vm.regs[reg]--;
@@ -43,7 +63,7 @@ while(vm.pc < program.length) {
             vm.pc = targetIndex;
             continue;
         }
-    } else if (op === "print") {
+    } else if (op === 0x04) {
         const [_, reg] = instr;
         const val = vm.regs[reg];
         console.log(val);

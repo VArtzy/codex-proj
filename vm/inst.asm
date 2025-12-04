@@ -1,0 +1,4 @@
+CONST r0, 10
+CONST r1, 20
+ADD r0, r1
+PRINT r0

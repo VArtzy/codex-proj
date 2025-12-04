@@ -1,3 +1,4 @@
+import { register } from "module";
 import readAsmProgram from "./util.js";
 
 // const program1 = [
@@ -27,10 +28,12 @@ import readAsmProgram from "./util.js";
 
 
 const program = new Uint8Array([
-    0x01, 0, 10, // r0 => 10
-    0x01, 1, 20, // r1 => 20
-    0x03, 0, 1, // r0 = r0 + r1
-    0x04, 0 // print r0
+    0x01, 0, 5, // r0 => 5
+    0x04, 0, // print r0
+    0x03, 0, -1, // r0--
+    0x05, 0, 13, // if r0 == 0 goto end
+    0x06, 3, // jump to print
+    0x04, 0, // end
 ]);
 
 const vm = {
@@ -48,10 +51,22 @@ while (vm.pc < program.length) {
     } else if (op === 0x03) {
         const reg = program[vm.pc + 1];
         const regIndex = program[vm.pc + 2];
-        if (regIndex === -1) {
+        if (regIndex === 255) {
             vm.regs[reg]--;
         } else {
             vm.regs[reg] += vm.regs[regIndex];
+        }
+        vm.pc += 2;
+    } else if (op === 0x06) {
+        const targetIndex = program[vm.pc + 1];
+        vm.pc = targetIndex;
+        continue;
+    } else if (op === 0x05) {
+        const reg = program[vm.pc + 1];
+        const targetIndex = program[vm.pc + 2];
+        if (vm.regs[reg] === 0) {
+            vm.pc = targetIndex;
+            continue;
         }
         vm.pc += 2;
     } else if (op === 0x04) {
@@ -79,11 +94,11 @@ while (vm.pc < program.length) {
 //         } else {
 //             vm.regs[reg] += vm.regs[regIndex];
 //         }
-//     } else if (op === "0x06") {
+//     } else if (op === 0x06) {
 //         const [_, targetIndex] = instr;
 //         vm.pc = targetIndex;
 //         continue;
-//     } else if (op === "0x05") {
+//     } else if (op === 0x05) {
 //         const [_, reg, targetIndex] = instr;
 //         if (vm.regs[reg] === 0) {
 //             vm.pc = targetIndex;

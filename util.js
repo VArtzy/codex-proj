@@ -8,7 +8,7 @@ const opCode = Object.freeze({
     JUMP: 0x06
 });
 
-function readAsmProgram(file) {
+function newReadAsmProgram(file) {
     let program = [];
     let counter = 0;
     const fprogram = fs.readFileSync(file)
@@ -26,4 +26,19 @@ function readAsmProgram(file) {
     return new Uint8Array(program);
 }
 
-export default readAsmProgram
+/**
+    * DEPRECATED -- use newReadAsmProgram instead
+*/
+function readAsmProgram(file) {
+    let program = [];
+    const fprogram = fs.readFileSync(file)
+        .toString()
+        .split('\n');
+    fprogram.forEach(inst => {
+        const [op, l, r] = inst.replace(/r/g, '').replace(',', '').split(' ');
+        program.push([op.toLowerCase(), parseInt(l), parseInt(r)]);
+    })
+    return program;
+}
+
+export { readAsmProgram, newReadAsmProgram }

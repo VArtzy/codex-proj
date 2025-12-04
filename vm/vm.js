@@ -59,6 +59,8 @@ while (vm.pc < program.length) {
         const val = vm.regs[reg];
         console.log(val);
         vm.pc++;
+    } else {
+        throw new SyntaxError('Opcodes not defined or bad structure');
     }
     vm.pc++;
 }
@@ -91,6 +93,8 @@ while (vm.pc < program.length) {
 //         const [_, reg] = instr;
 //         const val = vm.regs[reg];
 //         console.log(val);
+//     } else {
+//         throw SyntaxError('Opcodes not defined or bad structure');
 //     }
 //
 //     vm.pc++;

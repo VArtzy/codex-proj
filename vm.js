@@ -1,5 +1,5 @@
-import { register } from "module";
-import readAsmProgram from "./util.js";
+// import { register } from "module";
+// import readAsmProgram from "./util.js";
 
 // const program1 = [
 //     ["const", 0, 10], // r0 => 10

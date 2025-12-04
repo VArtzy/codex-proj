@@ -10,14 +10,20 @@ const opCode = Object.freeze({
 
 function readAsmProgram(file) {
     let program = [];
+    let counter = 0;
     const fprogram = fs.readFileSync(file)
         .toString()
         .split('\n');
     fprogram.forEach(inst => {
         const [op, l, r] = inst.replace(/r/g, '').replace(',', '').split(' ');
-        program.push([opCode[op], parseInt(l), parseInt(r)]);
+        program[counter] = opCode[op];
+        program[counter + 1] = l;
+        if (r !== undefined) {
+            program[counter + 2] = r;
+        }
+        counter += 3;
     })
-    return program;
+    return new Uint8Array(program);
 }
 
 export default readAsmProgram

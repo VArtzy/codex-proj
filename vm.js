@@ -1,5 +1,4 @@
-// import { register } from "module";
-// import readAsmProgram from "./util.js";
+import readAsmProgram from "./util.js";
 
 // const program1 = [
 //     ["const", 0, 10], // r0 => 10
@@ -43,6 +42,8 @@
 //     0x06, 3, // jump to print
 //     0x04, 0, // end
 // ]);
+
+// const program = readAsmProgram('inst.asm');
 
 const program = new Uint8Array([
     0x01, 0, 10,

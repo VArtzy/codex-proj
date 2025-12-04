@@ -19,21 +19,27 @@ import readAsmProgram from "./util.js";
 
 // const program3 = readAsmProgram('inst.asm');
 
-// const program = [
+// const program4 = [
 //     [0x01, 0, 10], // r0 => 10
 //     [0x01, 1, 20], // r1 => 20
 //     [0x03, 0, 1], // r0 = r0 + r1
 //     [0x04, 0] // print r0
 // ];
 
+// const program5 = new Uint8Array([
+    //     0x01, 0, 5, // r0 => 5
+    //     0x04, 0, // print r0
+    //     0x03, 0, -1, // r0--
+    //     0x05, 0, 13, // if r0 == 0 goto end
+    //     0x06, 3, // jump to print
+    //     0x04, 0, // end
+    // ]);
 
 const program = new Uint8Array([
-    0x01, 0, 5, // r0 => 5
-    0x04, 0, // print r0
-    0x03, 0, -1, // r0--
-    0x05, 0, 13, // if r0 == 0 goto end
-    0x06, 3, // jump to print
-    0x04, 0, // end
+    0x01, 0, 10,
+    0x01, 1, 20,
+    0x03, 0, 1,
+    0x04, 0,
 ]);
 
 const vm = {
